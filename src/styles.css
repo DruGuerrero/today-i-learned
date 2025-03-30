@@ -24,6 +24,12 @@ body {
   color: #d2d0c5;
 }
 
+.disputed {
+  color: #ef4444;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
 /* Main layout */
 
 #root {
