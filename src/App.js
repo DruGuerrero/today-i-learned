@@ -195,6 +195,10 @@ function NewFactForm({ setFacts, setShowForm }) {
       setCategory("");
       //6. Close the form
       setShowForm(false);
+    } else {
+      alert(
+        "The Trustworthy source must be a valid LINK/URL (with the http:// or https://)"
+      );
     }
   }
 
