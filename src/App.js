@@ -159,11 +159,11 @@ function NewFactForm({ setFacts, setShowForm }) {
   async function handleSubmit(e) {
     //1. Prevent the browser reload
     e.preventDefault();
-    console.log(text, source, category);
+    // console.log(text, source, category);
 
     //2. Check if the data is valid. If so, create a new fact
     if (text && isValidHttpUrl(source) && category && textLength <= 200) {
-      console.log("Valid data");
+      // console.log("Valid data");
 
       //3. Create a new fact object
       // const newFact = {
@@ -185,7 +185,7 @@ function NewFactForm({ setFacts, setShowForm }) {
         .select();
       setIsUploading(false);
 
-      console.log(newFact);
+      // console.log(newFact);
 
       //4. Add the new fact to the UI: Add the fact to state
       if (!error) setFacts((facts) => [newFact[0], ...facts]);
@@ -302,7 +302,7 @@ function Fact({ fact, setFacts }) {
       .select();
     setIsUpdating(false);
 
-    console.log(updatedFact);
+    // console.log(updatedFact);
     if (!error)
       setFacts((facts) =>
         facts.map((f) => (f.id === fact.id ? updatedFact[0] : f))
