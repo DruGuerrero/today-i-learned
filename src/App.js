@@ -1,4 +1,5 @@
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
+import supabase from "./supabase";
 import "./styles.css";
 
 const initialFacts = [
@@ -8,7 +9,7 @@ const initialFacts = [
     source: "https://opensource.fb.com/",
     category: "technology",
     votesInteresting: 24,
-    votesMindblowing: 9,
+    votesMindBlowing: 9,
     votesFalse: 4,
     createdIn: 2021,
   },
@@ -19,7 +20,7 @@ const initialFacts = [
       "https://www.mother.ly/parenting/millennial-dads-spend-more-time-with-their-kids",
     category: "society",
     votesInteresting: 11,
-    votesMindblowing: 2,
+    votesMindBlowing: 2,
     votesFalse: 0,
     createdIn: 2019,
   },
@@ -29,7 +30,7 @@ const initialFacts = [
     source: "https://en.wikipedia.org/wiki/Lisbon",
     category: "society",
     votesInteresting: 8,
-    votesMindblowing: 3,
+    votesMindBlowing: 3,
     votesFalse: 1,
     createdIn: 2015,
   },
@@ -50,7 +51,29 @@ function Counter() {
 
 function App() {
   const [showForm, setShowForm] = useState(false);
-  const [facts, setFacts] = useState(initialFacts);
+  const [facts, setFacts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(function () {
+    async function getFacts() {
+      setIsLoading(true);
+      const { data: fact, error } = await supabase
+        .from("fact")
+        .select("*")
+        .order("votesInteresting", { ascending: false })
+        .limit(20);
+      if (!error) {
+        setFacts(fact);
+      } else {
+        alert(`There was a problem getting the facts. ${error.message}`);
+        console.log(error);
+      }
+      console.log(fact);
+
+      setIsLoading(false);
+    }
+    getFacts();
+  }, []);
 
   return (
     <>
@@ -62,10 +85,14 @@ function App() {
 
       <main className="main">
         <CategoryFilter />
-        <FactList facts={facts} />
+        {isLoading ? <Loader /> : <FactList facts={facts} />}
       </main>
     </>
   );
+}
+
+function Loader() {
+  return <p className="message">Loading...</p>;
 }
 
 function Header({ showForm, setShowForm }) {
@@ -132,7 +159,7 @@ function NewFactForm({ setFacts, setShowForm }) {
         source,
         category,
         votesInteresting: 0,
-        votesMindblowing: 0,
+        votesMindBlowing: 0,
         votesFalse: 0,
         createdIn: new Date().getFullYear(),
       };
@@ -231,7 +258,7 @@ function Fact({ fact }) {
       </span>
       <div className="vote-buttons">
         <button>👍 {fact.votesInteresting}</button>
-        <button>🤯 {fact.votesMindblowing}</button>
+        <button>🤯 {fact.votesMindBlowing}</button>
         <button>🚫 {fact.votesFalse}</button>
       </div>
     </li>
