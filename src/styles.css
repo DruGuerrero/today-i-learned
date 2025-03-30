@@ -147,6 +147,7 @@ h1 {
 
 ul {
   list-style: none;
+  width: 100%;
 }
 
 .source:link,
