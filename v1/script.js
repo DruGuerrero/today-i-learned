@@ -55,17 +55,12 @@ loadFacts();
 
 //LOAD data from Supabase
 async function loadFacts() {
-  const res = await fetch(
-    "https://wplkwskczqzfzyweagfz.supabase.co/rest/v1/fact",
-    {
-      headers: {
-        apiKey:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndwbGt3c2tjenF6Znp5d2VhZ2Z6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI2OTYyMjAsImV4cCI6MjA1ODI3MjIyMH0.bllWTiJHYU4SkPm00vAPFr0pmJE6tdMfNRuN3eKJKEI",
-        authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndwbGt3c2tjenF6Znp5d2VhZ2Z6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI2OTYyMjAsImV4cCI6MjA1ODI3MjIyMH0.bllWTiJHYU4SkPm00vAPFr0pmJE6tdMfNRuN3eKJKEI",
-      },
-    }
-  );
+  const res = await fetch(process.env.REACT_APP_API_URL, {
+    headers: {
+      apiKey: process.env.REACT_APP_API_KEY,
+      authorization: "Bearer " + process.env.REACT_APP_API_KEY,
+    },
+  });
   const data = await res.json();
   console.log(data);
   // const filteredData = data.filter((fact) => fact.category === "history");
